@@ -1,0 +1,42 @@
+{
+  "name": "quizzard",
+  "version": "1.0.0",
+  "description": "A quiz game",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chema-mengibar/quizzard.git"
+  },
+  "keywords": [
+    "quiz"
+  ],
+  "author": "Chema Mengibar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chema-mengibar/quizzard/issues"
+  },
+  "homepage": "https://github.com/chema-mengibar/quizzard#readme",
+  "dependencies": {
+    "@types/react": "^16.9.1",
+    "babel-plugin-styled-components": "^1.10.6",
+    "babel-preset-env": "^1.7.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "jest": "^24.8.0",
+    "lodash": "^4.17.15",
+    "next": "^9.0.3",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "serve": "^11.1.0",
+    "styled-components": "^4.3.2",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
+    "webpack": "^4.39.2"
+  }
+}
