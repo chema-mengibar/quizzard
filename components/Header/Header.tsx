@@ -2,13 +2,17 @@ import React from 'react'
 import Link from 'next/link';
 import { inject, observer } from 'mobx-react';
 
-const Header = inject('AppStore')((props) => {
+const Header = (props) => {
 
   const Menu = ['game','intro','ranking','menu'];
 
+
+
   return (
     <div>
-      {props.AppStore.user}
+      {props.AppStore.getUser}
+
+
       <ul>
         {
           Menu && Menu.length &&
@@ -27,6 +31,7 @@ const Header = inject('AppStore')((props) => {
       
     </div>
   )
-  });
+  };
 
-export default Header;
+  export default inject('AppStore')(observer(Header))
+  // export default inject('AppStore')(observer(Header))
