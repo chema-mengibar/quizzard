@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import Colors from "../../../styles/colors.styles";
+import Colors from "../../../style/colors.style";
 
 export interface InputProps {
   id?: string;

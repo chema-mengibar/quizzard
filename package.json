@@ -9,7 +9,8 @@
     "start": "next start",
     "test": "jest --config ./jest.config.js",
     "storybook": "start-storybook -p 6006 -c .storybook -s ./",
-    "storybook:build": "build-storybook -c .storybook -o .storybook-build"
+    "storybook:build": "build-storybook -c .storybook -o .storybook-build",
+    "plop": "plop"
   },
   "repository": {
     "type": "git",
@@ -48,7 +49,9 @@
     "@storybook/addon-viewport": "^5.1.11",
     "@storybook/react": "^5.1.11",
     "@types/storybook__react": "^4.0.2",
+    "@zeit/next-typescript": "^1.1.1",
     "css-loader": "^3.2.0",
+    "plop": "^2.5.0",
     "storybook-addon-styled-component-theme": "^1.2.4",
     "to-string-loader": "^1.1.5"
   }

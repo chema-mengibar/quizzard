@@ -1,4 +1,4 @@
-import Colors from "./colors.styles";
+import Colors from "./colors.style";
 
 export interface ThemeInterface {
   name: string;
