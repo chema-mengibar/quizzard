@@ -1,14 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import styled from 'styled-components'
 
 import {GlobalStyles} from './styles/global.styles'
 
+import Context, { ContextProvider } from './Context'
 
 import {GridHeader, GridPanel} from './components/grid/grid'
 import {Col} from './components/col/col'
 import Repo from './repository.mocks'
-
 
 const App = ( props ) => {
 
@@ -34,4 +33,10 @@ const App = ( props ) => {
   )
 }
 
-ReactDOM.render( <App />, document.getElementById("app"));
+
+ReactDOM.render( 
+  <ContextProvider>
+    <App />
+  </ContextProvider>,
+  document.getElementById("app")
+);

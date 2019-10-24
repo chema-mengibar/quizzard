@@ -8,7 +8,7 @@ export const Node = (props) => {
   const isRightOn = true
   
   return (
-    <NodeWrapper>
+    <NodeWrapper onClick={ props.click }>
       <Conector on={isLeftOn} ></Conector>
       {props.item.label}
       <Conector on={isRightOn} ></Conector>
