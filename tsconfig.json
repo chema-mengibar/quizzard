@@ -18,6 +18,7 @@
     "node_modules",
     "_archiv",
     "dist",
+    "plop-templates/**/*.tsx",
     "**/*.spec.ts",
     "**/*.test.ts"
   ],
