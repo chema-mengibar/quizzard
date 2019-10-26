@@ -1,5 +1,59 @@
+export default {
+  items:[
+    {
+      type: 'atom',
+      label: 'Button',
+      id: 'a054'
+    },
+    {
+      type: 'atom',
+      label: 'Input Email',
+      id: 'a055'
+    },
+    {
+      type: 'molecule',
+      label: 'Form Special',
+      id: 'm001'
+    },
+    {
+      type: 'organism',
+      label: 'Content Shop',
+      id: 'o001'
+    },
+    {
+      type: 'page',
+      label: 'Shop',
+      id: 'p001'
+    }
+  ],
+  tree:[
+    {
+      id: 'p001',
+      children: [
+        {
+          id: 'o001',
+          children: [
+            {
+              id: 'm001',
+              children: [
+                {
+                  id: 'a054'
+                },
+                {
+                  id: 'a055'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
 /*
-  ypes definition:
+  >>>>>>> Types definition:
   items: [] 
     item: {}
       - type: page | organism | molecule | atom
@@ -17,7 +71,7 @@
 */
 
 /*
-Example:
+>>>>>>> Example:
 
 tree = {
   items:[
@@ -72,57 +126,3 @@ tree = {
   ]
 }
 */
-
-
-export default {
-  items:[
-    {
-      type: 'atom',
-      label: 'Button',
-      id: 'a054'
-    },
-    {
-      type: 'atom',
-      label: 'Input Email',
-      id: 'a055'
-    },
-    {
-      type: 'molecule',
-      label: 'Form Special',
-      id: 'm001'
-    },
-    {
-      type: 'organism',
-      label: 'Content Shop',
-      id: 'o001'
-    },
-    {
-      type: 'page',
-      label: 'Shop',
-      id: 'p001'
-    }
-  ],
-  tree:[
-    {
-      id: 'p001',
-      children: [
-        {
-          id: 'o001',
-          children: [
-            {
-              id: 'm001',
-              children: [
-                {
-                  id: 'a054'
-                },
-                {
-                  id: 'a055'
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
