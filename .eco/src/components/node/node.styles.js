@@ -11,14 +11,14 @@ const actionHeight = Math.min( 25 , nodeMinHeight );
 
 export const NodeWrapper = styled.div`
   display:flex;
-  min-height: ${ nodeMinHeight }px; //@todo: resize
-  margin: 5px 0; //@todo: resize
+  min-height: ${ nodeMinHeight }px;
+  margin: 5px 0;
 ` ;
 
 export const ConectorAction = styled.div`
   flex: 1;
   align-self: center;
-  background-color: ${colorize.hexToRgbA('#ffffff', '.1')};
+  background-color: ${({active}) => active ? theme.accent_primary : colorize.hexToRgbA('#ffffff', '.1') };
   height: ${actionHeight}px;
   order:${ ({left}) => left ? `0` : `1`};
 `
@@ -34,6 +34,15 @@ export const ConectorDecoration = styled.div`
     `border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     `
+  }
+  ${ ({left, active}) => {
+      if( active ) {
+        return left ?
+          `border-left: 2px solid ${theme.accent_primary};` : 
+          `border-right: 2px solid ${theme.accent_primary};`
+      }
+      return ''
+    } 
   }
 `
 
@@ -59,8 +68,8 @@ export const Box = styled.div`
   display:flex;
   flex-direction:row;
   flex-grow: 1;
-  background-color: ${theme.base_des_02};
-  color: ${theme.text};
+  background-color: ${ theme.base_des_02 };
+  color: ${ ({isSelected}) =>  isSelected ? theme.accent_primary : theme.text};
 ` ;
 
 export const BoxCol = styled.div`
@@ -75,6 +84,7 @@ export const BoxCol = styled.div`
     margin-left: 10px;
     margin-right: 5px;
     flex-grow: 1;
+    cursor:pointer;
   }
   &:last-child {
     margin-right: 10px;
@@ -87,16 +97,18 @@ export const Sticker = styled.div`
   min-width:30px;
   padding:2px;
   border-radius: 5px;
-  background-color: ${theme.accent_primary_dev_01};
+  background-color: ${({isCreated}) => isCreated ? theme.accent_primary_dev_01 : theme.accent_secondary_dev_01};
   text-align:center;
   font-size:10px;
-  color: ${theme.accent_primary};
+  color:${ ({isCreated}) => isCreated ? theme.accent_primary : theme.accent_secondary };
 ` ;
 
 export const Dotted = styled.div`
   width: 10px;
   align-self: flex-end;
-  &:after {
+  cursor:pointer;
+
+  :after {
     display: inline-block;
     content: '\\2807';
     font-size: 18px;

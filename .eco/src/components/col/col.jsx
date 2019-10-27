@@ -41,9 +41,7 @@ export const Col = (props) => {
         {
           items &&  items.map( (item, idx) => { 
             return( 
-              <Node key={ `node_${props.atomicType}_${idx}` } 
-                item={item}
-              /> 
+              <Node key={ `node_${props.atomicType}_${idx}` } {...item} /> 
             )
           })
         }
