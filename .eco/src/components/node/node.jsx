@@ -1,6 +1,21 @@
 import React from "react";
 
-import {NodeWrapper, Conector, Box, BoxCol, Sticker, Dotted} from './node.styles'
+import { 
+  NodeWrapper, 
+  ConectorWrapper, ConectorAction, ConectorDecoration,
+  Box, BoxCol, Sticker, Dotted
+} from './node.styles'
+
+
+const Conector = (props) => {
+  return (
+    <ConectorWrapper on={props.on} left={props.left} >
+      <ConectorAction left={props.left} />
+      <ConectorDecoration left={props.left} />
+    </ConectorWrapper>
+  )
+}
+
 
 export const Node = (props) => {
   

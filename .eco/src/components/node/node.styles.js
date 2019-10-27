@@ -1,7 +1,6 @@
-import styled, {css} from 'styled-components'
+import styled from 'styled-components'
 
 import {theme} from '../../styles/theme.styles'
-
 import colorize from '../../helpers/colorize/colorize'
 
 const nodeMinHeight = 35
@@ -12,80 +11,46 @@ const actionHeight = Math.min( 25 , nodeMinHeight );
 
 export const NodeWrapper = styled.div`
   display:flex;
-  justify-content: space-between;
   min-height: ${ nodeMinHeight }px; //@todo: resize
   margin: 5px 0; //@todo: resize
 ` ;
 
-
-const borderDecorationCSS = `
-  display: block;
-  content: '';
-  width: ${connectorDecorationWidth}px;
-  height:100%;
-  min-height:  ${ nodeMinHeight }px;
-  background-color: ${ theme.base_des_02};
-`
-
-const actionDecorationCSS = `
-  display: block;
-  content: '';
-  width: ${ connectorWidth - connectorDecorationWidth }px;
-  height:${actionHeight}px;
+export const ConectorAction = styled.div`
+  flex: 1;
+  align-self: center;
   background-color: ${colorize.hexToRgbA('#ffffff', '.1')};
-  margin-top: ${ (nodeMinHeight - actionHeight) / 2 }px;
+  height: ${actionHeight}px;
+  order:${ ({left}) => left ? `0` : `1`};
 `
 
-const borderHoverCSS = `2px solid ${theme.accent_primary}`
+export const ConectorDecoration = styled.div`
+  width: ${connectorDecorationWidth}px;
+  background-color: ${ theme.base_des_02};
+  order:${ ({left}) => left ? `1` : `0`};
+  ${ ({left}) => left ?
+    `border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    ` :
+    `border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    `
+  }
+`
 
-export const Conector = styled.div`
-  background-color: ${ props => props.on ? 'transparent' : theme.accent_primary};
-  // background-clip: content-box;
-  // padding: 12px 0;
-  width: ${connectorWidth + 2}px; // borderHoverCSS border-sieze
-  height:100%;
-  min-height: 20px;
-  box-sizing: border-box;
+export const ConectorWrapper = styled.div`
+  display:flex;
+  width: ${connectorWidth + 2}px;
   cursor: pointer;
 
   :hover{
-    :before{
-      ${ ({left}) => {
-        return left ? `border-left: ${borderHoverCSS};` : `border-right: ${borderHoverCSS};`
-      }}
+    ${ConectorDecoration}{
+      ${ ({left}) => left ?
+        `border-left: 2px solid ${theme.accent_primary};` :
+        `border-right: 2px solid ${theme.accent_primary};`
+      }
     }
-    :after{
+    ${ConectorAction}{
       background-color: ${theme.accent_primary};
-    }
-  }
-
-  ${
-    ({left}) => {
-      return left ? 
-      `
-      :before{
-        ${borderDecorationCSS}
-        float: right;
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-      }
-      :after{
-        ${actionDecorationCSS}
-        float: right;
-      }
-      `: 
-      `
-      :before{
-        ${borderDecorationCSS}
-        float: left;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-      }
-      :after{
-        ${actionDecorationCSS}
-        float: left;
-      }
-      `
     }
   }
 ` ;
@@ -138,5 +103,3 @@ export const Dotted = styled.div`
     color: ${theme.text_des_01};
   }
 ` ;
-
-
