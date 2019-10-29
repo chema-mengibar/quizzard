@@ -2,12 +2,22 @@ export default {
   items:[
     {
       type: 'atom',
-      label: 'Button',
+      label: 'Button1',
       id: '1'
+    },
+    {
+      type: 'atom',
+      label: 'Button2',
+      id: '2'
+    },
+    {
+      type: 'molecule',
+      label: 'BBox',
+      id: '3'
     }
   ],
   tree:[
-    { id:'1', children:[] }
+    { id:'3', children:[] }
   ]
 }
 

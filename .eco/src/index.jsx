@@ -8,6 +8,7 @@ import RepositoryContext, { RepositoryContextProvider } from './helpers/contexts
 import {GridHeader, GridPanel} from './components/grid/grid'
 import {Menu} from './components/menu/menu'
 import {Col} from './components/col/col'
+import {Keys} from './components/keys/keys'
 
 
 const App = ( props ) => {
@@ -39,6 +40,7 @@ ReactDOM.render(
   <RepositoryContextProvider>
     <AppContextProvider>
       <App />
+      <Keys />
     </AppContextProvider>
   </RepositoryContextProvider>,
   document.getElementById("app")

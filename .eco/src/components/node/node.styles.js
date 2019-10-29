@@ -16,13 +16,13 @@ export const NodeWrapper = styled.div`
 ` ;
 
 
-const processStatus = ({isSelected, hasParents, hasChildren, isInParent, isInChildren})=> { 
+const processStatus = ({isSelected, hasParents, hasChildren, isInParent, isInChildren, nodeIdFrom, nodeIdTo})=> { 
   // ${ ({status}) => processStatus(status) };
   let color = theme.accent.default.base
   if( !isSelected ){
     color = isInParent ? theme.accent.primary.base : theme.accent.secondary.base 
   }
-  return color
+  return color // (nodeIdFrom || nodeIdTo) ? theme.accent.tertiary.base :
 }
 
 
@@ -30,12 +30,18 @@ export const ConectorAction = styled.div`
   flex: 1;
   align-self: center;
   background-color: ${
-    ({active, status}) => active ?
+    ({active, status}) => (active) ?
       processStatus(status) :
       colorize.hexToRgbA('#ffffff', '.1')
     };
   height: ${actionHeight}px;
   order:${ ({left}) => left ? `0` : `1`};
+
+  /* :before{
+    display: block;
+    content: "\2193"; 
+    font-size: 12px;
+  } */
 `
 
 

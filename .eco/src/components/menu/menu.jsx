@@ -39,13 +39,18 @@ export const Menu = (props) => {
         </Button>
         <Button 
           onClick={()=> { 
+            dispatchApp({ type: 'setDialogName' , payload: 'menuModal'}); 
             dispatchApp({ type: "openDialog"});
           }}
         >
           Open Dialog
         </Button>
       </MenuWrapper>
-      <Modal onClose={ ()=> modalOnClose() } onSubmit={ ()=> modalOnClose() } />
+      <Modal  
+        modalId={'menuModal'}
+        onClose={ ()=> modalOnClose() } 
+        onSubmit={ ()=> modalOnClose() } 
+      />
     </>
   )
 }

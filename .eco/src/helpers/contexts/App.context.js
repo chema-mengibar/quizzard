@@ -7,6 +7,7 @@ const AppContext = React.createContext()
 let initialState = {
   name: '',
   dialogIsOpen: false,
+  dialogName:null
 };
 
 let reducer = (state, action) => {
@@ -21,6 +22,10 @@ let reducer = (state, action) => {
       return { ...state, dialogIsOpen: true };
     case "closeDialog":
       return { ...state, dialogIsOpen: false };
+    case "setDialogName":
+      return { ...state, dialogName: action.payload  };
+    case "resetDialog":
+      return { ...state, dialogIsOpen: false, dialogName:null };
   }
 };
 

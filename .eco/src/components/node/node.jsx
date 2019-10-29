@@ -21,8 +21,8 @@ const Conector = ({left, active, status, id}) => {
         dispatch({ type: "setNodeIdFrom", payload: id})
       }
     >
-      <ConectorAction active={active} left={left} status={status}/>
-      <ConectorDecoration active={active} left={left} status={status}/>
+      <ConectorAction active={active} left={left} status={status} />
+      <ConectorDecoration active={active} left={left} status={status} /> 
     </ConectorWrapper>
   )
 }
@@ -41,6 +41,8 @@ export const Node = ({
   const [isInParent, setIsInParent] = useState( false );
   const [hasChildren, setHasChildren] = useState( false );
   const [hasParents, setHasParents] = useState( false );
+  const [nodeIdFrom, setNodeIdFrom] = useState( false );
+  const [nodeIdTo, setNodeIdTo] = useState( false );
 
   function recursionTree(){
     // Direction left: children
@@ -76,9 +78,16 @@ export const Node = ({
     
   function getStatus(  ){
     // This values are changed accord the last selected item: isInParent, isInChildren
-    return { isSelected, hasParents, hasChildren, isInParent, isInChildren}
+    return { isSelected, hasParents, hasChildren, isInParent, isInChildren, nodeIdFrom, nodeIdTo }
   }
 
+  useLayoutEffect(() => {
+    setNodeIdFrom( state.nodeIdFrom == id )
+  }, [state.nodeIdFrom]);
+
+  useLayoutEffect(() => {
+    setNodeIdTo( state.nodeIdTo == id )
+  }, [state.nodeIdTo]);
  
   useLayoutEffect(() => {
     setIsSelected( state.selectedNodeId == id )
