@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useContext, useState, useLayoutEffect } from "react";
 import ReactDOM from "react-dom";
 
 import {GlobalStyles} from './styles/global.styles'
 import Context, { ContextProvider } from './helpers/contexts/App.context'
 import RepositoryContext, { RepositoryContextProvider } from './helpers/contexts/Repository.context'
+
 import {GridHeader, GridPanel} from './components/grid/grid'
+import {Menu} from './components/menu/menu'
 import {Col} from './components/col/col'
 
 
@@ -16,7 +18,7 @@ const App = ( props ) => {
     <>
       <GlobalStyles />
       <GridHeader>
-        Menu
+        <Menu />
       </GridHeader>
       <GridPanel>
         { 

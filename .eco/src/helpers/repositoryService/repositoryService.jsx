@@ -1,10 +1,10 @@
-import Repo from './repository.mocks'
+import RepoMock from './repository.mocks'
 
-export const repository = {...Repo}
+export const repository = {...RepoMock}
 
 function generateId( _type ){
-  const prefix = _type
-  const counter = 999
+  const prefix = 'node-' //_type
+  const counter = new Date().getTime()
   const newId = `${prefix}${counter}`
   return newId
 }
@@ -21,6 +21,7 @@ export const addItem = ( _type, _label, _dispatch) => {
     id: generateId( _type )
   }
   repository.items.push(newItem)
+  return newItem.id
 }
 
 export const getRepo = () =>{
@@ -41,6 +42,31 @@ export function getParents( id ){
   return parents.length  ? parents : []
 }
 
+
+export function connectFromTo( fromNode, toNode){
+
+  let found = false
+  repository.tree.forEach(element => {
+    if( element.id === toNode ){
+      found = true
+      if( element.children ){
+        element.children.push( fromNode )
+      }
+      else{
+        element.children = [fromNode]
+      }
+    }
+  });
+
+  if(!found){
+    const newConnection = {
+      id: toNode,
+      children:[ fromNode ]
+    }
+    repository.tree.push( newConnection )
+  }
+
+}
 
 
 /*

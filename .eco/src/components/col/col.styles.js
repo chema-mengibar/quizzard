@@ -13,8 +13,10 @@ export const ColWrapper = styled.div`
 ` ;
 
 export const ColHeader = styled.div`
+  display:flex;
   border-bottom: 1px solid ${theme.decoration};
-  height:30px;
+  height:40px;
+  padding:5px;
   background-color: ${theme.base_des_01};
 ` ;
 

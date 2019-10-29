@@ -10,9 +10,17 @@ import {
 } from './node.styles'
 
 
-const Conector = ({left, active, status}) => {
+const Conector = ({left, active, status, id}) => {
+
+  const { state, dispatch } = useContext( getContext() )
   return (
-    <ConectorWrapper left={left} >
+    <ConectorWrapper left={left} 
+      onClick={ () =>
+       left ? 
+        dispatch({ type: "setNodeIdTo", payload: id}) :
+        dispatch({ type: "setNodeIdFrom", payload: id})
+      }
+    >
       <ConectorAction active={active} left={left} status={status}/>
       <ConectorDecoration active={active} left={left} status={status}/>
     </ConectorWrapper>
@@ -63,7 +71,7 @@ export const Node = ({
 
   function selectNode( ){
     dispatch({ type: "setSelectedNodeId", payload: id});
-    recursionTree();
+    recursionTree(); //(?1)
   }
     
   function getStatus(  ){
@@ -76,6 +84,12 @@ export const Node = ({
     setIsSelected( state.selectedNodeId == id )
   }, [state.selectedNodeId]);
 
+  useLayoutEffect(() => {
+    setIsSelected( state.selectedNodeId == id )
+    if( state.paintNodeConnections && state.selectedNodeId === id ){
+      recursionTree()
+    }
+  }, [state.paintNodeConnections]);
 
   useLayoutEffect(() => {
     if( state.selectedNodeId != id ){
@@ -119,7 +133,9 @@ export const Node = ({
 
   return (
     <NodeWrapper>
-      <Conector active={ hasChildren  || isInParent }
+      <Conector 
+        active={ hasChildren  || isInParent }
+        id={id}
         left 
         status={getStatus()}
       />
@@ -138,6 +154,7 @@ export const Node = ({
       </Box>
       <Conector 
         active={ hasParents || isInChildren }
+        id={id}
         status={getStatus()}
       />
     </NodeWrapper>

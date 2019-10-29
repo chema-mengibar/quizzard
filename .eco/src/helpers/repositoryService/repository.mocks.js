@@ -4,51 +4,10 @@ export default {
       type: 'atom',
       label: 'Button',
       id: '1'
-    },
-    {
-      type: 'atom',
-      label: 'Input Email',
-      id: '2'
-    },
-    {
-      type: 'atom',
-      label: 'Input Name',
-      id: '21'
-    },
-    {
-      type: 'molecule',
-      label: 'Form Newsletter',
-      id: '3'
-    },
-    {
-      type: 'molecule',
-      label: 'Form User',
-      id: '31'
-    },
-    {
-      type: 'organism',
-      label: 'Block News',
-      id: '4'
-    },
-    {
-      type: 'organism',
-      label: 'Block Salutation',
-      id: '41'
-    },
-    {
-      type: 'page',
-      label: 'Shop',
-      id: '5'
     }
   ],
   tree:[
-    { id:'1' },
-    { id:'2' },
-    { id:'3', children:['1','2'] },
-    { id:'31', children:['1','21'] },
-    { id:'4', children:['3'] },
-    { id:'41', children:['31'] },
-    { id:'5', children:['4','41'] },
+    { id:'1', children:[] }
   ]
 }
 

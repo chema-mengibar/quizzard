@@ -26,8 +26,8 @@ export const theme = {
       l1:''
     },
     tertiary:{
-      d1:'#CA00B4',
-      base:'#E81CD2',
+      d1:'#cccccc',
+      base:'#ffffff',
       l1:''
     }
   }

@@ -126,7 +126,7 @@ export const Sticker = styled.div`
   background-color: ${colorize.hexToRgbA('#ffffff', '.1') };
   text-align:center;
   font-size:10px;
-  color: ${colorize.hexToRgbA('#ffffff', '.2') }; /*${ ({isCreated}) => isCreated ? 'white' : 'white' };*/
+  color: ${colorize.hexToRgbA('#ffffff', '.2') };
 ` ;
 
 

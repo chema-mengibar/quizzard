@@ -10,6 +10,9 @@ let initialState = {
   selectedNodeId: '',
   familyChildren: [],
   familyParents: [],
+  nodeIdFrom: null,
+  nodeIdTo: null,
+  paintNodeConnections: false,
 };
 
 
@@ -25,6 +28,8 @@ let reducer = (state, action) => {
       return initialState;
     case "setSelectedNodeId":
       return { ...state, selectedNodeId: action.payload };
+    case "setPaintNodeConnections":
+      return { ...state, paintNodeConnections: action.payload };
     case "addToFamilyChildren":
       return { ...state, familyChildren: [ ...state.familyChildren , ...action.payload] };
     case "setFamilyChildren":
@@ -33,6 +38,12 @@ let reducer = (state, action) => {
       return { ...state, familyParents: [ ...state.familyParents , ...action.payload] };
     case "setFamilyParents":
       return { ...state, familyParents: action.payload };
+    case "setNodeIdFrom":
+      return { ...state, nodeIdFrom: action.payload };
+    case "setNodeIdTo":
+      return { ...state, nodeIdTo: action.payload };
+    case "resetFromTo":
+        return { ...state, nodeIdFrom:null, nodeIdTo:null  };
   }
 };
 
