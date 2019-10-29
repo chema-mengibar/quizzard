@@ -9,12 +9,26 @@ export const theme = {
   text_des_01: '#383C45',
   text: '#ffffff',
 
-  accent_primary_dev_01: '#1E4435',
-  accent_primary: '#04BF2D',
-
-  accent_secondary_dev_01: '#824C04',
-  accent_secondary: '#F4971B',
-
-  accent_contrast_dev_01: '#CA00B4',
-  accent_contrast: '#E81CD2',
+  accent:{
+    default:{
+      d1:'#CA00B4',
+      base:'#E81CD2',
+      l1:''
+    },
+    primary:{
+      d1:'#1E4435',
+      base:'#04BF2D',
+      l1:''
+    },
+    secondary:{
+      d1:'#824C04',
+      base:'#F4971B',
+      l1:''
+    },
+    tertiary:{
+      d1:'#CA00B4',
+      base:'#E81CD2',
+      l1:''
+    }
+  }
 }

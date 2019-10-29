@@ -62,21 +62,18 @@ export const Node = ({
   }
 
   function selectNode( ){
-    console.log('############', id)
     dispatch({ type: "setSelectedNodeId", payload: id});
     recursionTree();
-    processStatus()
   }
     
-  function processStatus(  ){
+  function getStatus(  ){
     // This values are changed accord the last selected item: isInParent, isInChildren
-    console.log( id, hasParents, hasChildren, isInParent, isInChildren )
+    return { isSelected, hasParents, hasChildren, isInParent, isInChildren}
   }
 
-
+ 
   useLayoutEffect(() => {
     setIsSelected( state.selectedNodeId == id )
-    console.log('>>> selectedNodeId', id)
   }, [state.selectedNodeId]);
 
 
@@ -92,7 +89,6 @@ export const Node = ({
         setHasChildren( false )
       }
     }
-    console.log('>>> familyChildren', id)
   }, [state.familyChildren]);
 
 
@@ -108,7 +104,6 @@ export const Node = ({
         setHasParents( false )
       }
     }
-    console.log('>>> familyParents', id)
   }, [state.familyParents]);
 
 
@@ -116,8 +111,8 @@ export const Node = ({
     if( isSelected ){ 
       
     }
-    processStatus()
-    console.log('>>> isSelected', id)
+    // console.log( getStatus() )
+    // console.log('>>> isSelected', id)
   }, [isSelected]);
 
 
@@ -126,10 +121,12 @@ export const Node = ({
     <NodeWrapper>
       <Conector active={ hasChildren  || isInParent }
         left 
-        status={true}
+        status={getStatus()}
       />
       <Box isSelected={isSelected} >
-        <BoxCol onClick={ ()=>selectNode() }>
+        <BoxCol 
+          status={getStatus()} 
+          onClick={ ()=>selectNode()}>
           {label}
         </BoxCol>
         <BoxCol>
@@ -141,7 +138,7 @@ export const Node = ({
       </Box>
       <Conector 
         active={ hasParents || isInChildren }
-        status={true}
+        status={getStatus()}
       />
     </NodeWrapper>
   )

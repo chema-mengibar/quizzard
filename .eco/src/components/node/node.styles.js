@@ -15,21 +15,33 @@ export const NodeWrapper = styled.div`
   margin: 5px 0;
 ` ;
 
+
+const processStatus = ({isSelected, hasParents, hasChildren, isInParent, isInChildren})=> { 
+  // ${ ({status}) => processStatus(status) };
+  let color = theme.accent.default.base
+  if( !isSelected ){
+    color = isInParent ? theme.accent.primary.base : theme.accent.secondary.base 
+  }
+  return color
+}
+
+
 export const ConectorAction = styled.div`
   flex: 1;
   align-self: center;
   background-color: ${
     ({active, status}) => active ?
-       (status == 'hasParents' ? theme.accent_secondary :  theme.accent_secondary) :
-       colorize.hexToRgbA('#ffffff', '.1')
+      processStatus(status) :
+      colorize.hexToRgbA('#ffffff', '.1')
     };
   height: ${actionHeight}px;
   order:${ ({left}) => left ? `0` : `1`};
 `
 
+
 export const ConectorDecoration = styled.div`
   width: ${connectorDecorationWidth}px;
-  background-color: ${ theme.base_des_02};
+  background-color: ${theme.base_des_02};
   order: ${ ({left}) => left ? '1' : '0'};
   ${({left}) => {
     const borderRadiusCss = (left ? 
@@ -43,7 +55,7 @@ export const ConectorDecoration = styled.div`
   }}
 
   ${({left, active, status}) => {
-    const color = (status == 'hasParents' ? 'red' :  'blue');
+    const color = processStatus(status);
     const borderLineCss = (active ?
       (left ? 
         `border-left: 2px solid ${color};` : 
@@ -54,6 +66,7 @@ export const ConectorDecoration = styled.div`
   }}
 `
 
+
 export const ConectorWrapper = styled.div`
   display:flex;
   width: ${connectorWidth + 2}px;
@@ -62,23 +75,25 @@ export const ConectorWrapper = styled.div`
   :hover{
     ${ConectorDecoration}{
       ${ ({left}) => left ?
-        `border-left: 2px solid ${theme.accent_contrast};` :
-        `border-right: 2px solid ${theme.accent_contrast};`
+        `border-left: 2px solid ${theme.accent.tertiary.base};` :
+        `border-right: 2px solid ${theme.accent.tertiary.base};`
       }
     }
     ${ConectorAction}{
-      background-color: ${theme.accent_contrast};
+      background-color: ${theme.accent.tertiary.base};
     }
   }
 ` ;
+
 
 export const Box = styled.div`
   display:flex;
   flex-direction:row;
   flex-grow: 1;
   background-color: ${ theme.base_des_02 };
-  color: ${ ({isSelected}) =>  isSelected ? theme.accent_primary : theme.text};
+  color: ${theme.text};
 ` ;
+
 
 export const BoxCol = styled.div`
   display:flex;
@@ -86,12 +101,14 @@ export const BoxCol = styled.div`
   align-items: center;
   justify-content: center;
   text-align:left;
+  color: ${({status})=> status && (status.isSelected || status.isInParent || status.isInChildren ) ? processStatus(status) : theme.text };
   padding: 5px 0;
 
   &:first-child {
     margin-left: 10px;
     margin-right: 5px;
     flex-grow: 1;
+
     cursor:pointer;
   }
   &:last-child {
@@ -100,6 +117,7 @@ export const BoxCol = styled.div`
     width:20px;
   }
 ` ;
+
 
 export const Sticker = styled.div`
   min-width:30px;
@@ -110,6 +128,7 @@ export const Sticker = styled.div`
   font-size:10px;
   color: ${colorize.hexToRgbA('#ffffff', '.2') }; /*${ ({isCreated}) => isCreated ? 'white' : 'white' };*/
 ` ;
+
 
 export const Dotted = styled.div`
   width: 10px;
