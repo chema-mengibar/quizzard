@@ -33,6 +33,15 @@ export function getChildren( id ){
   return treeItemList.length && treeItemList[0].children ? treeItemList[0].children : []
 }
 
+export function getParents( id ){
+  const otherNodes = repository.tree.filter( (item)=> { 
+    return ( item.id != id ) && ( item.children && item.children.indexOf(id) > -1 )
+  } )
+  const parents = otherNodes.map(element => element.id);
+  return parents.length  ? parents : []
+}
+
+
 
 /*
 import {getItemById, getChildren} from '../../helpers/repositoryService/repositoryService'

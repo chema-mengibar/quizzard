@@ -12,6 +12,9 @@ export const theme = {
   accent_primary_dev_01: '#1E4435',
   accent_primary: '#04BF2D',
 
-  accent_secondary_dev_01: '#18495E',
-  accent_secondary: '#20819A',
+  accent_secondary_dev_01: '#824C04',
+  accent_secondary: '#F4971B',
+
+  accent_contrast_dev_01: '#CA00B4',
+  accent_contrast: '#E81CD2',
 }

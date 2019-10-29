@@ -8,7 +8,8 @@ console.log('init repo contxt')
 let initialState = {
   changed: { flag:false, type:null },
   selectedNodeId: '',
-  familyNodes: [],
+  familyChildren: [],
+  familyParents: [],
 };
 
 
@@ -24,10 +25,14 @@ let reducer = (state, action) => {
       return initialState;
     case "setSelectedNodeId":
       return { ...state, selectedNodeId: action.payload };
-    case "addToFamilyNodes":
-      return { ...state, familyNodes: [ ...state.familyNodes , ...action.payload] };
-    case "setFamilyNodes":
-      return { ...state, familyNodes: action.payload };
+    case "addToFamilyChildren":
+      return { ...state, familyChildren: [ ...state.familyChildren , ...action.payload] };
+    case "setFamilyChildren":
+      return { ...state, familyChildren: action.payload };
+    case "addToFamilyParents":
+      return { ...state, familyParents: [ ...state.familyParents , ...action.payload] };
+    case "setFamilyParents":
+      return { ...state, familyParents: action.payload };
   }
 };
 
