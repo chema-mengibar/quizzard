@@ -2,7 +2,7 @@ import React, {useContext, useState, useLayoutEffect } from "react";
 import ReactDOM from "react-dom";
 
 import {GlobalStyles} from './styles/global.styles'
-import Context, { ContextProvider } from './helpers/contexts/App.context'
+import AppContext, { AppContextProvider } from './helpers/contexts/App.context'
 import RepositoryContext, { RepositoryContextProvider } from './helpers/contexts/Repository.context'
 
 import {GridHeader, GridPanel} from './components/grid/grid'
@@ -37,9 +37,9 @@ const App = ( props ) => {
 
 ReactDOM.render( 
   <RepositoryContextProvider>
-    <ContextProvider>
+    <AppContextProvider>
       <App />
-    </ContextProvider>
+    </AppContextProvider>
   </RepositoryContextProvider>,
   document.getElementById("app")
 );

@@ -1,13 +1,13 @@
 import React from 'react'
 
 
-const Context = React.createContext()
+const AppContext = React.createContext()
 
 
 let initialState = {
   name: '',
+  dialogIsOpen: false,
 };
-
 
 let reducer = (state, action) => {
   switch (action.type) {
@@ -17,22 +17,26 @@ let reducer = (state, action) => {
       return { ...state, name: state.name = ''};
     case "rename":
       return { ...state, name: action.payload };
+    case "openDialog":
+      return { ...state, dialogIsOpen: true };
+    case "closeDialog":
+      return { ...state, dialogIsOpen: false };
   }
 };
 
 
-export const ContextProvider = (props) => {
+export const AppContextProvider = (props) => {
 
   let [state, dispatch] = React.useReducer(reducer, initialState);
-  let value = { state, dispatch };
+  let value = { stateApp: state, dispatchApp: dispatch };
 
   return (
-    <Context.Provider value={value}>{props.children}</Context.Provider>
+    <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
   );
 }
 
 
-export const getContext = () => { return Context }
+export const getAppContext = () => { return AppContext }
 
 
-export default Context
+export default AppContext
