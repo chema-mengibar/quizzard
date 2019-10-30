@@ -1,4 +1,4 @@
-import React, {useContext, useState, useLayoutEffect } from "react";
+import React, {useContext, useState, useRef, useEffect, useLayoutEffect } from "react";
 
 import AppContext, { AppContextProvider } from '../../helpers/contexts/App.context'
 import {Button} from '../button/button.styles'
@@ -14,6 +14,8 @@ export const ModalComponentName = ({
   const { stateApp, dispatchApp } = useContext( AppContext )
   const [componentName, setComponentName] = useState( '' );
 
+  const nameRef = useRef(null);
+
   function handleChange(event) {
     setComponentName(event.target.value);
   }
@@ -22,12 +24,21 @@ export const ModalComponentName = ({
     setComponentName('')
   }
 
+  // // todo: focus
+  useEffect(() => {
+    if( stateApp.dialogIsOpen ){
+      // nameRef.current.focus() // todo: focus
+      setTimeout(() => { nameRef.current.focus() });
+    }
+  }, [stateApp.dialogIsOpen]);
+
   return (
     <>
       <H1>Add Component</H1>
-      <Label htmlFor={'component-name'}>Component name:</Label>
+      <Label htmlFor={'component-name'}>Component name</Label>
       <Input 
         type="text" 
+        ref={nameRef} 
         name="component-name" 
         value={ componentName } 
         onChange={handleChange} 
@@ -40,7 +51,7 @@ export const ModalComponentName = ({
         onSubmit( modalData )
         }}
       >
-        Submit
+        Create
       </Button>
     </>
   )

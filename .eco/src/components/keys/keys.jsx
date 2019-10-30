@@ -1,7 +1,9 @@
 import React, {useContext, useCallback, useState, useEffect, useLayoutEffect } from "react";
 
 import AppContext, { AppContextProvider } from '../../helpers/contexts/App.context'
+
 import {Modal} from '../modal/modal'
+import {ModalCmd} from '../modal/partial_modal-cmd'
 
 export const Keys = (props) => {
 
@@ -37,7 +39,9 @@ export const Keys = (props) => {
         onClose={()=>{}} 
         onSubmit={ ()=>{}} 
       >
-        Dialog CMD
+        <ModalCmd onSubmit={()=>{ 
+          dispatchApp({ type: "closeDialog"})
+        }} />
       </Modal>
     </>
   )

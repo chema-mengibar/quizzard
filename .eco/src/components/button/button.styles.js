@@ -3,7 +3,15 @@ import styled, {css} from 'styled-components'
 import {theme} from '../../styles/theme.styles'
 import colorize from '../../helpers/colorize/colorize'
 
-export const Button = styled.div`
+export const Button = styled.button`
+
+  user-select: none;
+  border:0;
+  outline:0;
+  ::-moz-focus-inner {
+    border: 0;
+    outline: 0;   
+  }
 
   ${({small}) =>{
     return small ?
@@ -35,6 +43,13 @@ export const Button = styled.div`
   }}
 
   :hover{
+    background-color: ${ theme.accent.default.base};
+  }
+  
+  :-moz-focusring {
+    outline: 0;
+    border: 0;
+    box-shadow: 0 0 10px ${theme.accent.default.base}; /*todo: blinky blinky? */
     background-color: ${ theme.accent.default.base};
   }
 

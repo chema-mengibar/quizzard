@@ -30,7 +30,7 @@ export const ModalContainer = styled.div`
   position:relative;
   margin:100px auto;
   width:500px;
-  height:200px;
+  min-height:200px;
   color: ${theme.text};
   background-color: ${theme.base_des_01};
   border: 2px solid ${theme.decoration};
@@ -76,3 +76,19 @@ export const Input = styled.input`
   color: ${theme.text};
 `;
 
+export const Ul = styled.ul`
+  list-style-type: none;
+  padding:0;
+  margin: 15px 0;
+`;
+
+export const Li = styled.li`
+  font-size: 12px;
+  margin-bottom: 5px;
+  color: ${ colorize.hexToRgbA('#ffffff','.4')};
+  cursor:pointer;
+
+  :hover{
+    color: ${ theme.accent.default.base };
+  }
+`;

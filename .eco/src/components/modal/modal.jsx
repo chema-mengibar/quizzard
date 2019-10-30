@@ -16,7 +16,6 @@ export const Modal = ({
   const { stateApp, dispatchApp } = useContext( AppContext )
   const [isOpen, setIsOpen] = useState( false );
 
-
   useLayoutEffect(() => {
     if(modalId === stateApp.dialogName){
       setIsOpen( stateApp.dialogIsOpen )

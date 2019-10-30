@@ -6,7 +6,7 @@ import { connectFromTo, getItemById } from '../../helpers/repositoryService/repo
 
 import {Modal} from '../modal/modal'
 import {Button} from '../button/button.styles'
-import {MenuWrapper} from './menu.styles'
+import {MenuWrapper, Block, Label, Value, Separator} from './menu.styles'
 
 export const Menu = (props) => {
 
@@ -17,34 +17,66 @@ export const Menu = (props) => {
     console.log('close modal callback')
   }
 
+  function triggerUpdate(){
+    dispatch({ type: "setPaintNodeConnections", payload: true });
+    setTimeout(
+      function() {
+        dispatch({ type: "setPaintNodeConnections", payload: false });
+      }
+      .bind(this),
+      500
+    );
+  }
+
   return (
     <>
       <MenuWrapper>
+       
         <Button 
-          onClick={()=> { 
-            connectFromTo( state.nodeIdFrom, state.nodeIdTo )
-            // const toItem = getItemById( state.nodeIdTo )
-            dispatch({ type: "setSelectedNodeId" , payload: state.nodeIdTo});
-            dispatch({ type: "setPaintNodeConnections", payload: true });
-            setTimeout(
-              function() {
-                dispatch({ type: "setPaintNodeConnections", payload: false });
-              }
-              .bind(this),
-              500
-            );
+          onClick={()=> {
+            // dispatchApp({ type: 'setDialogName' , payload: 'menuModal'}); 
+            // dispatchApp({ type: "openDialog"});
           }}
+        >
+          Save
+        </Button>
+        <Block>
+          <Label> From </Label>
+          <Value
+            onClick={ ()=>{
+              if( state.nodeIdFrom){
+                // this.blur(); // todo: button lose focus
+                dispatch({ type: "setSelectedNodeId" , payload: state.nodeIdFrom});
+                triggerUpdate()
+              }
+            } }
+          >
+            {state.nodeIdFrom ? `${getItemById(state.nodeIdFrom).type.toUpperCase()}::${getItemById(state.nodeIdFrom).label}` : 'no-selected'}</Value>
+          <Separator />
+          <Label> To </Label>
+          <Value
+            onClick={ ()=>{
+              if( state.nodeIdTo){
+                dispatch({ type: "setSelectedNodeId" , payload: state.nodeIdTo})
+                triggerUpdate()
+              }
+            } }
+          >
+            {state.nodeIdTo ? `${getItemById(state.nodeIdTo).type.toUpperCase()}::${getItemById(state.nodeIdTo).label}` : 'no-selected'}</Value>
+          <Separator />
+          <Button 
+            onClick={()=> { 
+              if( state.nodeIdFrom || state.nodeIdTo){
+                connectFromTo( state.nodeIdFrom, state.nodeIdTo )
+                dispatch({ type: "setSelectedNodeId" , payload: state.nodeIdTo});
+                triggerUpdate()
+              }
+            }}
           >
           Connect
         </Button>
-        <Button 
-          onClick={()=> { 
-            dispatchApp({ type: 'setDialogName' , payload: 'menuModal'}); 
-            dispatchApp({ type: "openDialog"});
-          }}
-        >
-          Open Dialog
-        </Button>
+        <Button dark onClick={()=> { dispatch({ type: "resetFromTo" }); }} > Clear </Button>
+        </Block>
       </MenuWrapper>
       <Modal  
         modalId={'menuModal'}

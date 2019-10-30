@@ -34,6 +34,11 @@ export const ConectorAction = styled.div`
       processStatus(status) :
       colorize.hexToRgbA('#ffffff', '.1')
     };
+  box-shadow: 0 0 10px  ${  /*todo: blinky blinky? */
+    ({active, status}) => (active) ?
+      processStatus(status) :
+      colorize.hexToRgbA('#ffffff', '.1')
+    };
   height: ${actionHeight}px;
   order:${ ({left}) => left ? `0` : `1`};
 
@@ -63,9 +68,9 @@ export const ConectorDecoration = styled.div`
   ${({left, active, status}) => {
     const color = processStatus(status);
     const borderLineCss = (active ?
-      (left ? 
-        `border-left: 2px solid ${color};` : 
-        `border-right: 2px solid ${color};`
+      (left ?   /*todo: blinky blinky? */
+        `border-left: 2px solid ${color}; box-shadow: 0 0 10px ${color};` : 
+        `border-right: 2px solid ${color}; box-shadow: 0 0 10px ${color};`
       ) : ''
     )
     return borderLineCss
@@ -98,6 +103,7 @@ export const Box = styled.div`
   flex-grow: 1;
   background-color: ${ theme.base_des_02 };
   color: ${theme.text};
+  z-index:200;   /*todo: blinky blinky? */
 ` ;
 
 
