@@ -1,8 +1,9 @@
 import React, {Fragment, useContext, useState, useLayoutEffect } from "react";
 
+import Server from '../../helpers/server';
 import AppContext, { AppContextProvider } from '../../helpers/contexts/App.context'
 import RepositoryContext, { RepositoryContextProvider } from '../../helpers/contexts/Repository.context'
-import { connectFromTo, getItemById } from '../../helpers/repositoryService/repositoryService'
+import { getRepo, connectFromTo, getItemById } from '../../helpers/repositoryService/repositoryService'
 
 import {Modal} from '../modal/modal'
 import {Button} from '../button/button.styles'
@@ -28,12 +29,18 @@ export const Menu = (props) => {
     );
   }
 
+  function saveData(){
+    const data = getRepo()
+    Server.sendData(data)
+  } 
+
   return (
     <>
       <MenuWrapper>
        
         <Button 
           onClick={()=> {
+            saveData()
             // dispatchApp({ type: 'setDialogName' , payload: 'menuModal'}); 
             // dispatchApp({ type: "openDialog"});
           }}

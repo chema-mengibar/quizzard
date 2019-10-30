@@ -1,6 +1,6 @@
-import RepoMock from './repository.mocks'
+// import RepoMock from './repository.mocks'
 
-export const repository = {...RepoMock}
+export let repository = {}
 
 function generateId( _type ){
   const prefix = 'node-' //_type
@@ -28,6 +28,9 @@ export const getRepo = () =>{
   return repository
 }
 
+export const setRepo = ( repo) =>{
+  repository = {...repo}
+}
 
 export function getChildren( id ){
   const treeItemList = repository.tree.filter( (item)=> item.id == id )
