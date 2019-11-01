@@ -1,47 +1,62 @@
-import React, {useContext, useCallback, useState, useEffect, useLayoutEffect } from "react";
+import React, { useContext, useCallback, useEffect } from "react";
 
-import AppContext, { AppContextProvider } from '../../helpers/contexts/App.context'
-
+import modalService from '../../helpers/modalService'
+import AppContext from '../../helpers/contexts/App.context'
 import {Modal} from '../modal/modal'
 import {ModalCmd} from '../modal/partial_modal-cmd'
+import {ModalInfo} from '../modal/partial_modal-info'
+import {ModalComponentName} from '../modal/partial_modal-component-name'
 
 export const Keys = (props) => {
 
-  const { stateApp, dispatchApp } = useContext( AppContext )
+  const { dispatchApp } = useContext( AppContext )
 
   const pressFunction = useCallback((event) => {
     if(event.keyCode === 27) {
       dispatchApp({ type: "closeDialog"})
-      dispatchApp({ type: 'setDialogName' , payload: null});
+      dispatchApp({ type: 'setDialogName' , payload: null})
     }
     if(event.keyCode === 32) {
-      dispatchApp({ type: 'setDialogName' , payload: `cmd`}); 
+      dispatchApp({ type: 'setDialogName' , payload: `cmd`})
       dispatchApp({ type: 'openDialog'}); 
     }
 
-    // if(event.keyCode === 13) {
-    //   dispatchApp({ type: 'openDialog'}); 
-    // }
   }, []);
 
   useEffect(() => {
-    document.addEventListener("keydown", pressFunction, false);
+    document.addEventListener("keydown", pressFunction, false)
     return () => {
-      document.removeEventListener("keydown", pressFunction, false);
+      document.removeEventListener("keydown", pressFunction, false)
     };
 
   }, []);
 
+  function modalOnClose (){
+    console.log('close modal callback')
+  }
+  
   return(
     <>
       <Modal 
         modalId={`cmd`}
-        onClose={()=>{}} 
-        onSubmit={ ()=>{}} 
+        onClose={()=> modalOnClose()} 
       >
         <ModalCmd onSubmit={()=>{ 
           dispatchApp({ type: "closeDialog"})
         }} />
+      </Modal>
+
+      <Modal 
+        modalId={`menuModal`} 
+        onClose={()=> modalOnClose()} >
+        <ModalInfo onSubmit={ ()=>{}}/>
+      </Modal>
+
+      <Modal 
+        modalId={`componentName`}
+        onClose={()=> modalOnClose()} 
+      >
+        <ModalComponentName onSubmit={ modalService.getOnSubmit()  } />
       </Modal>
     </>
   )

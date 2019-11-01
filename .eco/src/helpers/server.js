@@ -1,49 +1,23 @@
+import Config  from './config'
+
+const url = Config.server.url
+const port =  Config.server.port
+
 export default {
+  sendEcco: ( action ) => {
 
-  // fetchAsyncMD: async ( libUrl ) => {
-  //   //https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Utilizando_Fetch
-  //   //https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-
-  //   // var myHeaders = new Headers();
-  //   // myHeaders.append("Content-Type", "text/plain");
-  //   // myHeaders.append("Content-Length", content.length.toString());
-  //   // myHeaders.append("X-Custom-Header", "ProcessThisImmediately");
-
-  //   // var miInit = { method: 'GET',
-  //   //        headers: myHeaders,
-  //   //        mode: 'no-cors',
-  //   //        cache: 'default' };
-
-  //   //let response = await fetch( libUrl, miInit );
-
-  //   // var myHeaders = new Headers();
-  //   // myHeaders.append("Content-Type", "text/plain");
-  //   // var miInit = { method: 'GET',
-  //   //       headers: myHeaders,
-  //   //       mode: 'cors',
-  //   //       cache: 'default' };
-  //   // let response = await fetch( libUrl, miInit );
-
-  //   // let data = await response;
-  //   // return data.text();
-  // },
-
-  // sendData: async(opts) => {
-  //   fetch('/save', {
-  //     method: 'post',
-  //     headers: {
-  //     'Accept': 'application/json',
-  //     'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(opts)
-  //   }).then(function(response) {
-  //     return response.json();
-  //   }).then(function(data) {
-  //     console.log( 'responseerror', data.html_url);
-  //   });
-  // }
+    const suffixAction = action ? `-${action}` : ''
+    const abortController = new AbortController() // issue:fetch-state
+    const signal = abortController.signal
+    const fetchPromise = fetch(`${url}:${port}/ecco${suffixAction}`, {signal: signal})
+    .then(res => res.json())
+    const cleanup = ()=>{
+      abortController.abort()
+    }
+    return { fetchPromise, cleanup }
+ },
   sendData: (opts) => {
-    fetch('http://localhost:80/save', {   // todo:server
+    fetch( `${url}:${port}/save`, {
       method: 'post',
       headers: {
       'Accept': 'application/json',
@@ -53,8 +27,17 @@ export default {
     }).then(function(response) {
       return response.json();
     }).then(function(data) {
-      console.log( 'responseerror', data.html_url);
-    });
-  }
-
+      console.log( 'response error', data);
+    })
+  },
+  getRepo:( )=>{
+    const abortController = new AbortController() // issue:fetch-state
+    const signal = abortController.signal
+    const fetchPromise = fetch(`${url}:${port}/repo`, {signal: signal})
+    .then(res => res.json())
+    const cleanup = ()=>{
+      abortController.abort()
+    }
+    return { fetchPromise, cleanup }
+ }
 }

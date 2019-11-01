@@ -1,36 +1,49 @@
-import React, {useContext, useState, useRef, useEffect, useLayoutEffect } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 
-import AppContext, { AppContextProvider } from '../../helpers/contexts/App.context'
+import AppContext from '../../helpers/contexts/App.context'
+import {getContext} from '../../helpers/contexts/Repository.context'
+
+import {getItemById} from '../../helpers/repositoryService/repositoryService'
+
 import {Button} from '../button/button.styles'
 
 import { H1, Input, Label } from './modal.styles'
 
 export const ModalComponentName = ({
-  modalId,
   onSubmit,
   onClose,
+  onOpen,
 }) => {
 
   const { stateApp, dispatchApp } = useContext( AppContext )
-  const [componentName, setComponentName] = useState( '' );
+  const { state, dispatch } = useContext( getContext() )
+  const [componentName, setComponentName] = useState( '' )
 
-  const nameRef = useRef(null);
+  const nameRef = useRef(null)
 
-  function handleChange(event) {
-    setComponentName(event.target.value);
+  function onChangeInput(event) {
+    setComponentName(event.target.value)
   }
 
   function resetForm(){
     setComponentName('')
   }
 
-  // // todo: focus
+  let selectedItem = null
+
   useEffect(() => {
     if( stateApp.dialogIsOpen ){
-      // nameRef.current.focus() // todo: focus
-      setTimeout(() => { nameRef.current.focus() });
+      setTimeout(() => { 
+        resetForm()
+        nameRef.current.focus() // nameRef.current.focus() // todo: focus
+      })
+
+      if(state.selectedNodeId){
+        selectedItem = getItemById( state.selectedNodeId )
+        setComponentName( selectedItem.label )
+      }
     }
-  }, [stateApp.dialogIsOpen]);
+  }, [stateApp.dialogIsOpen])
 
   return (
     <>
@@ -41,17 +54,15 @@ export const ModalComponentName = ({
         ref={nameRef} 
         name="component-name" 
         value={ componentName } 
-        onChange={handleChange} 
+        onChange={onChangeInput} 
       />
-      
       <Button onClick={()=>{
         const modalData = {componentName}
-        resetForm()
+        onSubmit( modalData ) // col:componentOnSubmit(modalData)
         dispatchApp({ type: "closeDialog"})
-        onSubmit( modalData )
         }}
       >
-        Create
+       { state.selectedNodeId ? 'Modify' : 'Create' }
       </Button>
     </>
   )

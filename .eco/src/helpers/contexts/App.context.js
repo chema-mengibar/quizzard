@@ -1,8 +1,7 @@
 import React from 'react'
 
-
 const AppContext = React.createContext()
-
+console.log('Init AppContext')
 
 let initialState = {
   name: '',
@@ -13,35 +12,42 @@ let initialState = {
 let reducer = (state, action) => {
   switch (action.type) {
     case "name":
-      return initialState;
+      return initialState
     case "empty":
-      return { ...state, name: state.name = ''};
+      return { ...state, name: state.name = ''}
     case "rename":
-      return { ...state, name: action.payload };
+      return { ...state, name: action.payload }
     case "openDialog":
-      return { ...state, dialogIsOpen: true };
+      return { ...state, dialogIsOpen: true }
     case "closeDialog":
-      return { ...state, dialogIsOpen: false };
+      console.log("CLOSE")
+      return { ...state, dialogIsOpen: false }
     case "setDialogName":
-      return { ...state, dialogName: action.payload  };
+      return { ...state, dialogName: action.payload  }
     case "resetDialog":
-      return { ...state, dialogIsOpen: false, dialogName:null };
+      return { ...state, dialogIsOpen: false, dialogName:null }
   }
 };
 
-
 export const AppContextProvider = (props) => {
 
-  let [state, dispatch] = React.useReducer(reducer, initialState);
-  let value = { stateApp: state, dispatchApp: dispatch };
+  let [state, dispatch] = React.useReducer(reducer, initialState)
+  let value = { stateApp: state, dispatchApp: dispatch }
 
   return (
-    <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
+    <AppContext.Provider value={value}>
+      {props.children}
+    </AppContext.Provider>
   );
 }
 
-
 export const getAppContext = () => { return AppContext }
 
-
 export default AppContext
+
+
+/* Usage:
+
+import AppContext, { AppContextProvider } from './helpers/contexts/App.context'
+
+*/

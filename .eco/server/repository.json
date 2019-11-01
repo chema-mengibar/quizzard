@@ -1,1 +1,22 @@
-{"items":[{"type":"atom","label":"Button1","id":"1"},{"type":"atom","label":"Button2","id":"2"},{"type":"molecule","label":"BBox","id":"3"},{"type":"atom","label":"Cactus","id":"node-1572445382711"}],"tree":[{"id":"3","children":[]}]}
+{
+  "items": [
+    {
+      "type": "atom",
+      "label": "Button",
+      "id": "1"
+    },
+    {
+      "type": "molecule",
+      "label": "Input-field",
+      "id": "node-1572446027889"
+    }    
+  ],
+  "tree": [
+    {
+      "id": "node-1572446027889",
+      "children": [
+        "1"
+      ]
+    }   
+  ]
+}

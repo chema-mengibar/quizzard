@@ -1,39 +1,22 @@
-import React, {useContext, useState, useEffect, useLayoutEffect } from "react";
+import React, {useContext, useState, useLayoutEffect } from "react";
 
+import Config  from '../../helpers/config'
+
+import AppContext from '../../helpers/contexts/App.context'
 import {getContext} from '../../helpers/contexts/Repository.context'
-import { getParents, getChildren } from '../../helpers/repositoryService/repositoryService'
 
-import { 
-  NodeWrapper, 
-  ConectorWrapper, ConectorAction, ConectorDecoration,
-  Box, BoxCol, Sticker, Dotted
-} from './node.styles'
+import { deleteItem, getParents, getChildren } from '../../helpers/repositoryService/repositoryService'
+
+import Panel from '../panel/panel'
+import {Conector} from './conector'
+
+import {  NodeWrapper, Box, BoxCol, Sticker, Dotted, Li } from './node.styles'
 
 
-const Conector = ({left, active, status, id}) => {
-
-  const { state, dispatch } = useContext( getContext() )
-  return (
-    <ConectorWrapper left={left} 
-      onClick={ () =>
-       left ? 
-        dispatch({ type: "setNodeIdTo", payload: id}) :
-        dispatch({ type: "setNodeIdFrom", payload: id})
-      }
-    >
-      <ConectorAction active={active} left={left} status={status} />
-      <ConectorDecoration active={active} left={left} status={status} /> 
-    </ConectorWrapper>
-  )
-}
-
-export const Node = ({
-  type,
-  label,
-  id,
-}) => {
+export const Node = ({ type, label, id, }) => {
   
   const { state, dispatch } = useContext( getContext() )
+  const { dispatchApp } = useContext( AppContext )
   
   const [isSelected, setIsSelected] = useState( (state.selectedNodeId == id) );
   const [isCreated, setIsCreated] = useState( false );
@@ -43,6 +26,8 @@ export const Node = ({
   const [hasParents, setHasParents] = useState( false );
   const [nodeIdFrom, setNodeIdFrom] = useState( false );
   const [nodeIdTo, setNodeIdTo] = useState( false );
+
+  const [visiblePanel, setVisisblePanel] = useState( false );
 
   function recursionTree(){
     // Direction left: children
@@ -114,7 +99,6 @@ export const Node = ({
     }
   }, [state.familyChildren]);
 
-
   useLayoutEffect(() => {
     if( state.selectedNodeId != id ){
       const inList = state.familyParents.indexOf( id ) > -1
@@ -129,16 +113,19 @@ export const Node = ({
     }
   }, [state.familyParents]);
 
+  // useLayoutEffect(() => {if( isSelected ){ } }, [isSelected]);
 
-  useLayoutEffect(() => {
-    if( isSelected ){ 
-      
-    }
-    // console.log( getStatus() )
-    // console.log('>>> isSelected', id)
-  }, [isSelected]);
-
-
+  const listCommands = [
+    { name:'Delete item', show: Config.actions.delete, action:()=>{ 
+      deleteItem(id) 
+      dispatch({ type: "change" , payload: type});
+    }},
+    { name:'Modify item', show: Config.actions.modify, config:'modify', action:()=>{ 
+      selectNode()
+      dispatchApp({ type: 'setDialogName' , payload: `componentName__${type}`})
+      dispatchApp({ type: 'openDialog'})
+    }},
+  ]
 
   return (
     <NodeWrapper>
@@ -158,7 +145,27 @@ export const Node = ({
           <Sticker {...isCreated} >{ isCreated ? 'C' : 'P'}</Sticker>
         </BoxCol>
         <BoxCol>
-          <Dotted />
+          <Dotted visible={visiblePanel} onClick={()=> {setVisisblePanel(true)} }/>
+          { visiblePanel && 
+            <Panel 
+              visible={visiblePanel} 
+              onClick={ ()=>{ setVisisblePanel(false) }}
+            >
+            { 
+              listCommands && 
+              listCommands.filter( (cmdItem ) => cmdItem.show )
+              .map( (cmdItem, idx) =>{
+                return ( <Li 
+                    key={`cmd-${idx}`} 
+                    onClick={ ()=> { cmdItem.action();  setVisisblePanel(false); }}
+                  >
+                    {cmdItem.name}
+                  </Li>
+                )
+              })
+            }
+            </Panel>
+          }
         </BoxCol>
       </Box>
       <Conector 

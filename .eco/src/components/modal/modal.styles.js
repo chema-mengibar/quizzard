@@ -3,7 +3,6 @@ import styled, {css} from 'styled-components'
 import {theme} from '../../styles/theme.styles'
 import colorize from '../../helpers/colorize/colorize'
 
-
 export const ModalWrapper = styled.div`
   position:absolute;
   top: 0;
@@ -12,8 +11,7 @@ export const ModalWrapper = styled.div`
   height:100%;
   display:${ ({show})=> show ? 'block' : 'none'};
   z-index:9000;
-` ;
-
+`
 
 export const ModalOverlay = styled.div`
   position:absolute;
@@ -22,9 +20,7 @@ export const ModalOverlay = styled.div`
   width:100%;
   height:100%;
   background-color: ${ colorize.hexToRgbA('#000000', '.3') };
-` ;
-
-
+` 
 
 export const ModalContainer = styled.div`
   position:relative;
@@ -37,31 +33,28 @@ export const ModalContainer = styled.div`
   padding:15px;
   display:flex;
   border-radius:5px;
-` ;
+`
 
 export const ModalControl = styled.div`
   padding-left:10px;
-`;
+`
 
 export const ModalPanel = styled.div`
   flex:1;
   display:flex;
   flex-direction: column;
   margin: 10px 0 20px;
-`;
-
+`
 
 export const H1 = styled.h1`
   font-size: 14px;
   margin-bottom:20px;
-`;
-
+`
 
 export const Label = styled.label`
   font-size: 12px;
   margin-bottom: 5px;
-`;
-
+`
 
 export const Input = styled.input`
   font-size: 18px;
@@ -74,21 +67,25 @@ export const Input = styled.input`
   margin-bottom: 10px;
   padding: 10px;
   color: ${theme.text};
-`;
+`
 
 export const Ul = styled.ul`
   list-style-type: none;
   padding:0;
   margin: 15px 0;
-`;
+`
 
 export const Li = styled.li`
   font-size: 12px;
   margin-bottom: 5px;
-  color: ${ colorize.hexToRgbA('#ffffff','.4')};
+  color: ${ colorize.hexToRgbA('#ffffff','1')};
   cursor:pointer;
 
   :hover{
     color: ${ theme.accent.default.base };
   }
-`;
+`
+
+export const P = styled.p`
+ 
+`

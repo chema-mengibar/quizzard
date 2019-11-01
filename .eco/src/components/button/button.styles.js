@@ -5,9 +5,13 @@ import colorize from '../../helpers/colorize/colorize'
 
 export const Button = styled.button`
 
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
   user-select: none;
   border:0;
   outline:0;
+  
   ::-moz-focus-inner {
     border: 0;
     outline: 0;   
@@ -17,19 +21,20 @@ export const Button = styled.button`
     return small ?
     css`
       min-width: 20px;
-      height: 20px;
-      line-height: 20px;
+      height: 30px;
     ` :
     css`
       min-width: 100px;
       height: 30px;
-      line-height: 30px;
+      div{ /* Not just Icon button - seprataion between text and icon */
+        margin-left:5px;
+      }
     `
   }}
 
-  text-align: center;
   border-radius:5px;
   color: ${ theme.text};
+  padding: 0 5px;
   cursor:pointer;
 
   ${({dark}) =>{
@@ -56,5 +61,4 @@ export const Button = styled.button`
   :not(:last-child){
     margin-right:5px;
   }
-
-` ;
+`

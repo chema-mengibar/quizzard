@@ -1,10 +1,9 @@
-import React, {useContext, useState, useEffect, useLayoutEffect } from "react";
+import React, { useContext, useState, useLayoutEffect } from "react";
 
-import AppContext, { AppContextProvider } from '../../helpers/contexts/App.context'
+import AppContext from '../../helpers/contexts/App.context'
 import {Button} from '../button/button.styles'
 
 import {ModalWrapper, ModalOverlay, ModalContainer, ModalControl, ModalPanel } from './modal.styles'
-
 
 export const Modal = ({
   modalId,
@@ -19,6 +18,9 @@ export const Modal = ({
   useLayoutEffect(() => {
     if(modalId === stateApp.dialogName){
       setIsOpen( stateApp.dialogIsOpen )
+    }
+    else{
+      setIsOpen( false )
     }
   }, [stateApp.dialogIsOpen]);
     

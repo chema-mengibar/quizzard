@@ -1,9 +1,10 @@
-import React, {useContext, useState, useRef, useEffect, useLayoutEffect } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 
-import AppContext, { AppContextProvider } from '../../helpers/contexts/App.context'
-import RepositoryContext, { RepositoryContextProvider } from '../../helpers/contexts/Repository.context'
+import Config  from '../../helpers/config'
+import AppContext from '../../helpers/contexts/App.context'
+import RepositoryContext from '../../helpers/contexts/Repository.context'
 
-// import {Button} from '../button/button.styles'
+import { emptyItems, emptyTree } from '../../helpers/repositoryService/repositoryService'
 
 import { H1, Input, Label, Ul, Li } from './modal.styles'
 
@@ -13,25 +14,50 @@ export const ModalCmd = ({
   onClose,
 }) => {
   
-  const { state, dispatch } = useContext( RepositoryContext )
-  const { stateApp, dispatchApp } = useContext( AppContext )
+  const { dispatch } = useContext( RepositoryContext )
+  const { stateApp } = useContext( AppContext )
+
+  const paintColumns = ()=>{
+    let qeue = []
+    Config.layout.forEach( atomicType => { 
+      qeue.push( ()=>{
+        setTimeout(() => {
+          dispatch({ type: "change" , payload: atomicType})
+          qeue.shift()
+          qeue.length > 0 && qeue[0]()
+        });
+      })
+    });
+    qeue[0]()
+  }
 
   const listCommands = [
     { name:'Clear Connectors', action:()=>{ dispatch({ type: "resetFromTo" }); }},
     { name:'Item copy', action:()=>{ console.log(' action called')}},
     { name:'Item delete', action:()=>{ console.log(' action called')}},
     { name:'Sort by Atoms', action:()=>{ console.log(' action called')}},
+    { name:'Item deselect', action:()=>{ 
+      dispatch({ type: "reset"})
+    }},
+    { name:'Delete all items', action:()=>{ 
+      emptyItems()
+      emptyTree()
+      paintColumns()
+    }},
+    { name:'Delete all connection', action:()=>{ 
+      emptyTree()
+      paintColumns()
+    }},
   ]
 
-
-  const [cmd, setCmd] = useState( '' );
-  const [list, setList] = useState( [...listCommands] );
+  const [cmd, setCmd] = useState( '' )
+  const [list, setList] = useState( [...listCommands] )
 
   const cmdRef = useRef(null);
 
   function handleChange(event) {
     const inpuTText = event.target.value
-    setCmd(inpuTText);
+    setCmd(inpuTText)
 
     const filteredCmd = listCommands.filter( cmdItem =>{
       return cmdItem.name.toLowerCase().indexOf( inpuTText.toLowerCase()) > -1
@@ -43,14 +69,13 @@ export const ModalCmd = ({
     setCmd('')
   }
 
-
   // // todo: focus
   useEffect(() => {
     if( stateApp.dialogIsOpen ){
       // nameRef.current.focus() // todo: focus
-      setTimeout(() => { cmdRef.current.focus() });
+      setTimeout(() => { cmdRef.current.focus() })
     }
-  }, [stateApp.dialogIsOpen]);
+  }, [stateApp.dialogIsOpen])
 
   return (
     <>

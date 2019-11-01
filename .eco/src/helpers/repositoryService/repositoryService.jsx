@@ -1,5 +1,3 @@
-// import RepoMock from './repository.mocks'
-
 export let repository = {}
 
 function generateId( _type ){
@@ -14,6 +12,11 @@ export function getItemById( id ){
   return foundItemList.length ? foundItemList[0] : null
 }
 
+export function getTreeItemById( id ){
+  const foundItemList = repository.tree.filter( (item)=> item.id == id )
+  return foundItemList.length ? foundItemList[0] : null
+}
+
 export const addItem = ( _type, _label, _dispatch) => {
   const newItem = {
     type: _type,
@@ -24,12 +27,38 @@ export const addItem = ( _type, _label, _dispatch) => {
   return newItem.id
 }
 
+export const modifyItem = ( _id, _label) => {
+
+  const items = repository.items.map( (item)=> {
+    if(item.id === _id ){
+      item.label = _label
+    }
+    return item
+  })
+  repository.items = [...items]
+}
+
 export const getRepo = () =>{
   return repository
 }
-
+ 
 export const setRepo = ( repo) =>{
   repository = {...repo}
+}
+
+export const emptyItems = ( ) =>{
+  repository.items = []
+  repository.items.length = 0
+}
+
+export const emptyTree = ( ) =>{
+  repository.tree = []
+  repository.tree.length = 0
+}
+
+export function deleteItem( id ){
+  const treeItemList = repository.items.filter( (item)=> item.id !== id )
+  repository.items = [...treeItemList]
 }
 
 export function getChildren( id ){
@@ -68,11 +97,27 @@ export function connectFromTo( fromNode, toNode){
     }
     repository.tree.push( newConnection )
   }
-
 }
 
+export function disconnecToFrom( toId, fromId ){
+  console.log( toId, fromId  )
+  const toNode = getTreeItemById( toId )
+  const filteredChildren = toNode.children.filter( childId => childId != fromId )
 
-/*
+  repository.tree.forEach(element => {
+    if( element.id === toId ){
+      if( element.children ){
+        element.children = [...filteredChildren]
+      }
+      else{
+        element.children = filteredChildren
+      }
+    }
+  });
+}
+
+/* Usage: 
+
 import {getItemById, getChildren} from '../../helpers/repositoryService/repositoryService'
 
 */

@@ -1,10 +1,13 @@
-import React, { useEffect, useContext, useState, useLayoutEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-
 import {GlobalStyles} from './styles/global.styles'
-import AppContext, { AppContextProvider } from './helpers/contexts/App.context'
-import RepositoryContext, { RepositoryContextProvider } from './helpers/contexts/Repository.context'
 
+// // import RepoMock from './helpers/repositoryService/repository.mocks' // dev:mocks
+import { AppContextProvider } from './helpers/contexts/App.context'
+import { RepositoryContextProvider } from './helpers/contexts/Repository.context'
+
+import Config  from './helpers/config'
+import Server from './helpers/server'
 import {setRepo} from './helpers/repositoryService/repositoryService'
 import {GridHeader, GridPanel} from './components/grid/grid'
 import {Menu} from './components/menu/menu'
@@ -13,29 +16,19 @@ import {Keys} from './components/keys/keys'
 
 
 const App = ( props ) => {
-
-  const atomicTypes = ['atom','molecule','organism','page']
-
-  const [init, setInit] = useState( false );
+ 
+  const atomicTypes = Config.layout
+  const [init, setInit] = useState( false ) // (true) // dev:mocks
+  // setRepo(RepoMock) // dev:mocks
 
   useEffect(() => {
-
-    const abortController = new AbortController()
-    const signal = abortController.signal
-    // https://medium.com/@selvaganesh93/how-to-clean-up-subscriptions-in-react-components-using-abortcontroller-72335f19b6f7
-
-    fetch('http://localhost:80/repo', {signal: signal}) // todo:server
-    .then(res => res.json())
-    .then(json =>{
-      console.log( json )
+    const {fetchPromise, cleanup} = Server.getRepo()
+    fetchPromise.then(json =>{
       setRepo(json)
       setInit(true)
     });
-
-    return function cleanup(){
-      abortController.abort()
-    }
-  }, []);
+    return cleanup
+  }, [])
 
   return (
     <>
