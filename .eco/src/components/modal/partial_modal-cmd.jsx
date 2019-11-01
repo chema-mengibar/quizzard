@@ -1,6 +1,6 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
 
-import Config  from '../../helpers/config'
+import Config  from '../../config'
 import AppContext from '../../helpers/contexts/App.context'
 import RepositoryContext from '../../helpers/contexts/Repository.context'
 
@@ -15,7 +15,7 @@ export const ModalCmd = ({
 }) => {
   
   const { dispatch } = useContext( RepositoryContext )
-  const { stateApp } = useContext( AppContext )
+  const { stateApp, dispatchApp } = useContext( AppContext )
 
   const paintColumns = ()=>{
     let qeue = []
@@ -43,10 +43,13 @@ export const ModalCmd = ({
       emptyItems()
       emptyTree()
       paintColumns()
+      dispatchApp({ type: "setServerStatus" , payload:{ msg:'Changes', status:'warning'}})
     }},
     { name:'Delete all connection', action:()=>{ 
       emptyTree()
       paintColumns()
+      dispatch({ type: "reset"})
+      dispatchApp({ type: "setServerStatus" , payload:{ msg:'Changes', status:'warning'}})
     }},
   ]
 

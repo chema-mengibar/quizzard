@@ -1,6 +1,6 @@
 import React, {useContext } from "react";
 
-import Config  from '../../helpers/config'
+import Config  from '../../config'
 
 import {getContext} from '../../helpers/contexts/Repository.context'
 

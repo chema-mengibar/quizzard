@@ -25,7 +25,7 @@ app.use( express.json() )
 
 app.get('/', function(req, res){
     console.log('REQ index')
-    res.sendFile(path.join(distDir,'index.html'));
+    res.sendFile(path.join(distDir,'app.html'));
 });
 
 

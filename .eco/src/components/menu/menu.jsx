@@ -1,28 +1,42 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
-import Config  from '../../helpers/config'
+import Config  from '../../config'
 import Server from '../../helpers/server';
 import AppContext from '../../helpers/contexts/App.context'
 import RepositoryContext from '../../helpers/contexts/Repository.context'
 import { getRepo, connectFromTo, getItemById, disconnecToFrom} from '../../helpers/repositoryService/repositoryService'
 import {Button} from '../button/button.styles'
 
+import {theme} from '../../styles/theme.styles'
+
 import IconCreate from '../icon/icon-create'
 import IconConnect from '../icon/icon-connect'
 import IconCut from '../icon/icon-cut'
 import IconEcco from '../icon/icon-ecco'
 import IconInfo from '../icon/icon-info'
+import IconSpinner from '../icon/icon-spinner'
+import IconCheck from '../icon/icon-check'
+import IconChange from '../icon/icon-change'
 
 import {
   MenuWrapper,
   Area, Block,
-  Label, Value, Separator
+  Label, Value, Separator,
+  ServerMsg, ServerStatus
 } from './menu.styles'
 
 export const Menu = (props) => {
 
+  const { stateApp, dispatchApp } = useContext( AppContext )
   const { state, dispatch } = useContext( RepositoryContext )
-  const { dispatchApp } = useContext( AppContext )
+
+  const [serverStatus, setServerStatus] = useState( );
+  const [serverMsg, setServerMsg] = useState( );
+
+  function serverProps( status, msg ){
+    setServerStatus(status)
+    setServerMsg(msg)
+  }
 
   function triggerUpdate(){
     dispatch({ type: "setPaintNodeConnections", payload: true })
@@ -35,9 +49,14 @@ export const Menu = (props) => {
     )
   }
 
+  function callBackSuccess(){
+    setTimeout( ()=> serverProps('success', 'Saved'), 1500 )
+  }
+
   function saveData(){
+    serverProps('loading', 'Saving items')
     const data = getRepo()
-    Server.sendData(data)
+    Server.sendData(data, callBackSuccess)
   } 
 
   function sendEcco( action ){
@@ -46,6 +65,15 @@ export const Menu = (props) => {
       console.log(json)
     });
   } 
+
+  function formatWord( word ){
+    return word.substring(0,3).toUpperCase();
+  }
+
+  useEffect(() => {
+    setServerStatus(stateApp.server.status)
+    setServerMsg(stateApp.server.msg)
+  }, [stateApp.server]);
 
   return (
     <>
@@ -71,7 +99,7 @@ export const Menu = (props) => {
                   }
                 } }
               >
-                {state.nodeIdFrom ? `${getItemById(state.nodeIdFrom).type.toUpperCase()}::${getItemById(state.nodeIdFrom).label}` : 'no-selected'}</Value>
+                {state.nodeIdFrom ? `${ formatWord( getItemById(state.nodeIdFrom).type)}::${getItemById(state.nodeIdFrom).label}` : 'no-selected'}</Value>
               <Separator />
               <Label> To </Label>
               <Value
@@ -82,7 +110,7 @@ export const Menu = (props) => {
                   }
                 }}
               >
-                {state.nodeIdTo ? `${getItemById(state.nodeIdTo).type.toUpperCase()}::${getItemById(state.nodeIdTo).label}` : 'no-selected'}</Value>
+                {state.nodeIdTo ? `${ formatWord(getItemById(state.nodeIdTo).type)}::${getItemById(state.nodeIdTo).label}` : 'no-selected'}</Value>
               <Separator />
               <Button 
                 onClick={()=> { 
@@ -90,6 +118,7 @@ export const Menu = (props) => {
                     connectFromTo( state.nodeIdFrom, state.nodeIdTo )
                     dispatch({ type: "setSelectedNodeId" , payload: state.nodeIdTo});
                     triggerUpdate()
+                    dispatchApp({ type: "setServerStatus" , payload:{ msg:'Changes', status:'warning'}})
                   }
                   else{
                     console.log('Action not possible')
@@ -104,6 +133,7 @@ export const Menu = (props) => {
                     disconnecToFrom(  state.nodeIdTo , state.nodeIdFrom)
                     dispatch({ type: "setSelectedNodeId" , payload: state.nodeIdTo});
                     triggerUpdate()
+                    dispatchApp({ type: "setServerStatus" , payload:{ msg:'Changes', status:'warning'}})
                   }
                 }}
               >
@@ -114,6 +144,15 @@ export const Menu = (props) => {
           }
         </Area>
         <Area>
+          <Block>
+            <Label> Server </Label>
+            <ServerMsg type={serverStatus}> { serverMsg ? serverMsg : ''} </ServerMsg>
+           {serverStatus &&  <ServerStatus>
+              { (serverStatus === 'loading') && <IconSpinner size={15} color={theme.accent.default.base} /> }
+              { (serverStatus === 'success') && <IconCheck size={15} color={theme.success}/>}
+              { (serverStatus === 'warning') && <IconChange size={15} color={theme.warning}/>}
+            </ServerStatus>}
+          </Block>
           { Config.actions.ecco && 
             <Block>
               <Button onClick={()=> { sendEcco()}} >

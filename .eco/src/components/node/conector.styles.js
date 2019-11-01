@@ -22,7 +22,7 @@ export const ConectorAction = styled.div`
   flex: 1;
   align-self: center;
   padding: 5px; /* Icon padding */
-  
+  transition: background-color 0.2s ease-out,  box-shadow 0.2s ease-out;
   background-color: ${
     ({active, status}) => (active) ?
       processStatus(status) :
@@ -35,6 +35,7 @@ export const ConectorAction = styled.div`
     };
   height: ${actionHeight}px;
   order:${ ({left}) => left ? `0` : `1`};
+  
 `
 
 export const ConectorDecoration = styled.div`

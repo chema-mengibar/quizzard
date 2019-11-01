@@ -8,7 +8,11 @@ export const ColWrapper = styled.div`
   width:33%;
   height: auto;
   min-height: 100%;
-  border: 1px solid ${theme.decoration};
+  
+  :not(:first-child):not(:last-child){
+    border-left: 1px solid ${theme.decoration};
+    border-right: 1px solid ${theme.decoration};
+  }
 `
 
 export const ColHeader = styled.div`
@@ -17,13 +21,15 @@ export const ColHeader = styled.div`
   height:40px;
   line-height:40px;
   padding:5px;
-  background-color: ${theme.base_des_01};
   color: ${theme.text};
   text-align:center;
   text-transform: uppercase;
+  width:100%;
+  position:fixed;
+  z-index: 1000;
 `
 
 export const ColContent = styled.div`
-  background-color: ${theme.base_des_01};
   flex-grow:1;
+  margin-top: 39px;
 `

@@ -6,7 +6,11 @@ console.log('Init AppContext')
 let initialState = {
   name: '',
   dialogIsOpen: false,
-  dialogName:null
+  dialogName:null,
+  server:{
+    status:null,
+    msg:''
+  }
 };
 
 let reducer = (state, action) => {
@@ -17,12 +21,16 @@ let reducer = (state, action) => {
       return { ...state, name: state.name = ''}
     case "rename":
       return { ...state, name: action.payload }
+    case "setServerStatus":
+      console.log(  action.payload )
+      return { ...state, server: { msg: action.payload.msg, status: action.payload.status } }
     case "openDialog":
       return { ...state, dialogIsOpen: true }
     case "closeDialog":
       console.log("CLOSE")
       return { ...state, dialogIsOpen: false }
     case "setDialogName":
+      console.log('dialog name', action.payload )
       return { ...state, dialogName: action.payload  }
     case "resetDialog":
       return { ...state, dialogIsOpen: false, dialogName:null }

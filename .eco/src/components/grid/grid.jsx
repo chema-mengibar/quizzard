@@ -7,12 +7,14 @@ export const GridHeader = styled.div`
   border-bottom: 1px solid ${theme.decoration};
   position:fixed;
   width:100%;
+  background-color:${theme.base};
+  z-index: 1000;
 `
 
 export const GridPanel = styled.div`
   flex: 1;
   display: flex;
-  flex-direction: row;
+  overflow:hidden;
   margin-top: 39px;
 `
 

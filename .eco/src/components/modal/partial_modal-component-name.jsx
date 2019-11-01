@@ -10,6 +10,7 @@ import {Button} from '../button/button.styles'
 import { H1, Input, Label } from './modal.styles'
 
 export const ModalComponentName = ({
+  modalId,
   onSubmit,
   onClose,
   onOpen,
@@ -32,16 +33,17 @@ export const ModalComponentName = ({
   let selectedItem = null
 
   useEffect(() => {
-    if( stateApp.dialogIsOpen ){
+    console.log( stateApp.dialogName )
+    if( stateApp.dialogName === modalId && stateApp.dialogIsOpen ){
       setTimeout(() => { 
-        resetForm()
+        if(state.selectedNodeId){
+          selectedItem = getItemById( state.selectedNodeId )
+          setComponentName( selectedItem.label )
+        }else{
+          resetForm()
+        }
         nameRef.current.focus() // nameRef.current.focus() // todo: focus
       })
-
-      if(state.selectedNodeId){
-        selectedItem = getItemById( state.selectedNodeId )
-        setComponentName( selectedItem.label )
-      }
     }
   }, [stateApp.dialogIsOpen])
 
@@ -59,6 +61,7 @@ export const ModalComponentName = ({
       <Button onClick={()=>{
         const modalData = {componentName}
         onSubmit( modalData ) // col:componentOnSubmit(modalData)
+        resetForm()
         dispatchApp({ type: "closeDialog"})
         }}
       >

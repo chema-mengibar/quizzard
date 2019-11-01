@@ -8,7 +8,8 @@ export const GlobalStyles = createGlobalStyle`
   ${fontCssGlobal}
 
   html, body {
-    height: 100%;
+    min-height: 100%;
+    background-color: ${theme.base_des_01};
   }
 
   *{
@@ -26,11 +27,9 @@ export const GlobalStyles = createGlobalStyle`
   #app{
     display: flex;
     flex-direction: column;
-    background-color: ${theme.base};
     min-height:100%;
   }
  
 `
-
 
 //     // color: ${props => (props.whiteColor ? 'white' : 'black')};

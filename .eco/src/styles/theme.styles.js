@@ -9,6 +9,10 @@ export const theme = {
   text_des_01: '#383C45',
   text: '#ffffff',
 
+  success: '#25AE88',
+  warning: '#fce008',
+  error: '#d90b0b',
+
   accent:{
     default:{
       d1:'#CA00B4',

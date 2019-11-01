@@ -1,11 +1,11 @@
 import React, {useContext, useState, useLayoutEffect } from "react";
 
-import Config  from '../../helpers/config'
-
+import Config  from '../../config'
+import modalService from '../../helpers/modalService'
 import AppContext from '../../helpers/contexts/App.context'
 import {getContext} from '../../helpers/contexts/Repository.context'
 
-import { deleteItem, getParents, getChildren } from '../../helpers/repositoryService/repositoryService'
+import { modifyItem, deleteItem, getParents, getChildren } from '../../helpers/repositoryService/repositoryService'
 
 import Panel from '../panel/panel'
 import {Conector} from './conector'
@@ -54,6 +54,13 @@ export const Node = ({ type, label, id, }) => {
         dispatch({ type: "addToFamilyParents", payload: gen3ParentsIds});
       });
     });
+  }
+
+  function componentOnSubmit ( modalData ){
+    console.log('submit modal callback', modalData )
+    modifyItem( id, modalData.componentName )
+    dispatch({ type: "change" , payload: type})
+    dispatchApp({ type: "setServerStatus" , payload:{ msg:'Changes', status:'warning'}})
   }
 
   function selectNode( ){
@@ -119,12 +126,17 @@ export const Node = ({ type, label, id, }) => {
     { name:'Delete item', show: Config.actions.delete, action:()=>{ 
       deleteItem(id) 
       dispatch({ type: "change" , payload: type});
+      dispatchApp({ type: "setServerStatus" , payload:{ msg:'Changes', status:'warning'}})
     }},
-    { name:'Modify item', show: Config.actions.modify, config:'modify', action:()=>{ 
-      selectNode()
-      dispatchApp({ type: 'setDialogName' , payload: `componentName__${type}`})
-      dispatchApp({ type: 'openDialog'})
-    }},
+    { 
+      name:'Modify item', show: Config.actions.modify, config:'modify', 
+      action:()=>{ 
+        modalService.setOnSubmit( componentOnSubmit )
+        selectNode()
+        dispatchApp({ type: 'setDialogName' , payload: `componentName`})
+        dispatchApp({ type: 'openDialog'})
+      }
+    },
   ]
 
   return (
@@ -146,7 +158,7 @@ export const Node = ({ type, label, id, }) => {
         </BoxCol>
         <BoxCol>
           <Dotted visible={visiblePanel} onClick={()=> {setVisisblePanel(true)} }/>
-          { visiblePanel && 
+          { 
             <Panel 
               visible={visiblePanel} 
               onClick={ ()=>{ setVisisblePanel(false) }}

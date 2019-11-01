@@ -41,7 +41,7 @@ export const Keys = (props) => {
         modalId={`cmd`}
         onClose={()=> modalOnClose()} 
       >
-        <ModalCmd onSubmit={()=>{ 
+        <ModalCmd modalId={`cmd`} onSubmit={()=>{ 
           dispatchApp({ type: "closeDialog"})
         }} />
       </Modal>
@@ -49,14 +49,14 @@ export const Keys = (props) => {
       <Modal 
         modalId={`menuModal`} 
         onClose={()=> modalOnClose()} >
-        <ModalInfo onSubmit={ ()=>{}}/>
+        <ModalInfo modalId={`menuModal`} onSubmit={ ()=>{}}/>
       </Modal>
 
       <Modal 
         modalId={`componentName`}
         onClose={()=> modalOnClose()} 
       >
-        <ModalComponentName onSubmit={ modalService.getOnSubmit()  } />
+        <ModalComponentName modalId={`componentName`} onSubmit={ modalService.getOnSubmit()  } />
       </Modal>
     </>
   )

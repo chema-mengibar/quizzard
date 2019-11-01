@@ -5,7 +5,7 @@ Express Server -> http://localhost:8080/
 npm run server
 ```
 
-App Dev -> http://localhost:3000/
+App Dev -> http://localhost:3000/app.html
 ```
 npm run dev
 ```
@@ -41,3 +41,4 @@ To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup f
 - https://www.flaticon.com/authors/dave-gandy
 - https://www.flaticon.com/authors/freepik
 - https://www.flaticon.com/authors/vaadin
+- https://www.flaticon.com/authors/google

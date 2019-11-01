@@ -6,7 +6,7 @@
     "build": "webpack",
     "storybook": "start-storybook -p 6006 -s dist",
     "build-storybook": "build-storybook  -s dist",
-    "server": "node ./server/server.js",
+    "server": "node ./server/index.js",
     "dev:watch": "webpack --watch --mode=development --config webpack.config.js",
     "dev": "webpack-dev-server --mode=development --config webpack.config.js"
   },

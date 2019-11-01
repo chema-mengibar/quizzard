@@ -81,7 +81,7 @@ export const Dotted = styled.div`
 export const Li = styled.li`
   font-size: 12px;
   margin-bottom: 10px;
-  color: ${ colorize.hexToRgbA('#ffffff','.4')};
+  color: ${theme.text};
   cursor:pointer;
 
   :hover{

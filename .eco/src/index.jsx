@@ -6,7 +6,7 @@ import {GlobalStyles} from './styles/global.styles'
 import { AppContextProvider } from './helpers/contexts/App.context'
 import { RepositoryContextProvider } from './helpers/contexts/Repository.context'
 
-import Config  from './helpers/config'
+import Config  from './config'
 import Server from './helpers/server'
 import {setRepo} from './helpers/repositoryService/repositoryService'
 import {GridHeader, GridPanel} from './components/grid/grid'

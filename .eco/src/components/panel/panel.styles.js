@@ -7,8 +7,13 @@ export const PanelWrapper = styled.div`
   top: 0;
   left: 0;
   width:100%;
-  height:100%;
-  display:${ ({visible})=> visible ? 'block' : 'none'};
+  /* height:100%; */
+  display:block;
+  /* display:${ ({visible})=> visible ? 'block' : 'none'}; */
+  visibility:${ ({visible})=> visible ? 'visible' : 'hidden'};
+  opacity:${ ({visible})=> (visible ? 1 : 0)};
+  height:${ ({visible})=> (visible ? '100%' : 0)};
+  transition: opacity .2s ease-out;
   z-index:10000;
 `
 

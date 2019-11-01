@@ -8,8 +8,13 @@ export const ModalWrapper = styled.div`
   top: 0;
   left: 0;
   width:100%;
-  height:100%;
-  display:${ ({show})=> show ? 'block' : 'none'};
+  /* height:100%; */
+  display:block;
+  visibility:${ ({show})=> (show ? 'visible' : 'hidden')};
+  /* display:${ ({show})=> (show ? 'block' : 'none')}; */
+  opacity:${ ({show})=> (show ? 1 : 0)};
+  height:${ ({show})=> (show ? '100%' : 0)};
+  transition: opacity .2s ease-out;
   z-index:9000;
 `
 
@@ -87,5 +92,10 @@ export const Li = styled.li`
 `
 
 export const P = styled.p`
- 
+ margin: 0 0 10px 10px;
+`
+
+export const Hr = styled.hr`
+  margin:20px 0;
+  color: ${ theme.decoration};
 `

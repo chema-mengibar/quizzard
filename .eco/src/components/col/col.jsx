@@ -1,12 +1,12 @@
 import React, {useContext, useState, useLayoutEffect } from "react";
 
-import Config  from '../../helpers/config'
+import Config  from '../../config'
 
 import AppContext from '../../helpers/contexts/App.context'
 import {getContext} from '../../helpers/contexts/Repository.context'
 
 import modalService from '../../helpers/modalService'
-import { repository, addItem, modifyItem} from '../../helpers/repositoryService/repositoryService'
+import { repository, addItem } from '../../helpers/repositoryService/repositoryService'
 import {Node} from '../node/node'
 
 import {Button} from '../button/button.styles'
@@ -25,15 +25,12 @@ export const Col = (props) => {
 
   const [items, setItems] = useState( getItemsByType( props.atomicType ) )
 
-
+ 
   function componentOnSubmit ( modalData ){
     console.log('submit modal callback', modalData )
-    if( !state.selectedNodeId ){
-      const addedItemId = addItem( props.atomicType , modalData.componentName )
-    }else{
-      modifyItem( state.selectedNodeId , modalData.componentName )
-    }
+    const addedItemId = addItem( props.atomicType , modalData.componentName )
     dispatch({ type: "change" , payload: props.atomicType})
+    dispatchApp({ type: "setServerStatus" , payload:{ msg:'Changes', status:'warning'}})
   }
 
   useLayoutEffect(() => {
