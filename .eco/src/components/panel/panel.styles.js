@@ -28,13 +28,23 @@ export const PanelOverlay = styled.div`
 
 export const PanelContainer = styled.div`
   position: relative;
-  margin: 10px 20px;
+  margin: ${ ({inside}) => inside ? '30px -130px' : '-140px 10px'};
   width:150px;
   min-height:150px;
   color: ${theme.text};
   background-color: ${theme.base_des_01};
   border: 2px solid ${theme.decoration};
-  border-left: 1px solid ${theme.accent.default.base};
+  ${ ({inside}) => inside ? 
+    `
+    border-top: 1px solid ${theme.accent.default.base};
+    border-right: 1px solid ${theme.accent.default.base};
+    ` : 
+    `
+    border-bottom: 1px solid ${theme.accent.default.base};
+    border-left: 1px solid ${theme.accent.default.base};
+    `
+  };
+
   padding: 5px 5px 15px 15px;
   display:flex;
   border-radius:5px;
