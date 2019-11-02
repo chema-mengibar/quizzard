@@ -14,7 +14,10 @@ export const GridHeader = styled.div`
 export const GridPanel = styled.div`
   flex: 1;
   display: flex;
-  overflow:hidden;
+  /* overflow: hidden; */
   margin-top: 39px;
+  max-width: 100%;
+  width: 100%;
+  clip-path: inset( -100vw -100vw -100vw 0 );
 `
 
