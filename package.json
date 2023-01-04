@@ -50,6 +50,6 @@
     "@types/storybook__react": "^4.0.2",
     "css-loader": "^3.2.0",
     "storybook-addon-styled-component-theme": "^1.2.4",
-    "to-string-loader": "^1.1.5"
+    "to-string-loader": "^1.2.0"
   }
 }
